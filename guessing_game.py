@@ -8,7 +8,7 @@ import random
 import time
 
 number_attempts = 1
-record_attempts = 0
+record_attempts = 0 
 
 def random_num():
     list_num  = [
@@ -26,25 +26,37 @@ def start_game(number_solution, number_attempts, record_attempts):
     time.sleep(.5)
     print(">>-------------------+-------------------<<")
 
-    if record_attempts == 0:
-        print("\nNo High score set yet") 
+    name = input("\nPlease enter your name: ")
 
-    while True:  
+    if record_attempts == 0:
+        print("\nHi {}, there is no High score set yet - let's see what you can do!".format(name)) 
+
+    while True:
         try:
-            number_guess = int(input("Guess a number from 1 to 10: "))
+            number_guess = int(input("\nGuess a number from 1 to 10: "))
         except ValueError:
-            print("Only use values between 1 and 10...try again")         
+            print("Only use whole numbers between 1 and 10...try again")         
             continue
 
         if number_guess > 10 or number_guess < 1:
-            print("Only use values between 1 and 10...try again")
+            print("Only use whole numbers between 1 and 10...try again")
             continue
         else:   
             if number_guess == number_solution:
-                print("\nGreat Job!!!")
+                print("\nGreat Job {}!!!".format(name.upper()))
                 print("You have guessed in {} attempt(s)!".format(number_attempts))
-
+                
                 play_again = input("\nWould you like to play again [Y]es/[N]o? ")
+
+                while True:
+                    if play_again.lower() == "y" or play_again.lower() == "n":
+                        break    
+                    else:
+                        time.sleep(.5)
+                        print("\n{} that is not a valid answer..try again!".format(name))
+                        time.sleep(.5)
+                        play_again = input("\nWould you like to play again [Y]es/[N]o? Please only use [Y] or [N] ")                        
+
                 if play_again.lower() == "y":
                     if record_attempts > number_attempts or record_attempts == 0:
                         record_attempts = number_attempts
@@ -59,9 +71,9 @@ def start_game(number_solution, number_attempts, record_attempts):
                         continue
                 elif play_again.lower() == "n":
                     time.sleep(.5)
-                    print("\nThank you for playing!")
+                    print("\nThank you for playing {}!".format(name))
                     time.sleep(.5)
-                    break 
+                    break              
             else:
                 if number_guess > number_solution:
                     print("It is Lower")
